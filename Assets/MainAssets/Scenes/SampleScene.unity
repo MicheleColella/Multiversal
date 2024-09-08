@@ -4814,7 +4814,7 @@ GameObject:
   - component: {fileID: 279249110}
   - component: {fileID: 279249109}
   - component: {fileID: 279249108}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: '[BuildingBlock] Cube'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9277,7 +9277,7 @@ GameObject:
   - component: {fileID: 566121834}
   - component: {fileID: 566121833}
   - component: {fileID: 566121832}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: ISDK_HandGrabInteraction
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9692,7 +9692,7 @@ GameObject:
   - component: {fileID: 577297748}
   - component: {fileID: 577297747}
   - component: {fileID: 577297746}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: '[BuildingBlock] TouchHandGrab'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10101,7 +10101,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.016666668
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: a984a27506b9642e199d4e6bd21c9177, type: 2}
+  m_NavMeshData: {fileID: 0}
   m_BuildHeightMesh: 0
 --- !u!4 &599619834
 Transform:
@@ -12456,6 +12456,52 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!1 &730421541
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 730421543}
+  - component: {fileID: 730421542}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &730421542
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 730421541}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 926b4959903084677afc3c28f9a881bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  generationDelay: 2
+  surface: {fileID: 599619833}
+--- !u!4 &730421543
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 730421541}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.39843696, y: 1.1499017, z: -1.5709155}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &738571223
 GameObject:
   m_ObjectHideFlags: 0
@@ -14486,7 +14532,7 @@ GameObject:
   - component: {fileID: 882870043}
   - component: {fileID: 882870042}
   - component: {fileID: 882870041}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17222,7 +17268,7 @@ GameObject:
   - component: {fileID: 1027298009}
   - component: {fileID: 1027298008}
   - component: {fileID: 1027298007}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19291,7 +19337,7 @@ GameObject:
   - component: {fileID: 1131304477}
   - component: {fileID: 1131304476}
   - component: {fileID: 1131304475}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: '[BuildingBlock] HandGrab'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23834,7 +23880,7 @@ GameObject:
   - component: {fileID: 1414690263}
   - component: {fileID: 1414690262}
   - component: {fileID: 1414690261}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: ISDK_HandGrabInteraction
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30640,7 +30686,7 @@ GameObject:
   - component: {fileID: 1760027376}
   - component: {fileID: 1760027375}
   - component: {fileID: 1760027374}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: ISDK_HandGrabInteraction
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31401,7 +31447,7 @@ GameObject:
   - component: {fileID: 1854338158}
   - component: {fileID: 1854338157}
   - component: {fileID: 1854338156}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -32300,12 +32346,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SpawnOnStart: 1
-  MeshMaterial: {fileID: 2100000, guid: 599b01c5f1d17436c89b88cc04257314, type: 2}
+  MeshMaterial: {fileID: 2100000, guid: 9b20ecae2e8914d73888326f0a0fa354, type: 2}
   BorderSize: 0
   Colliders: 1
   CutHoles: 0
   castShadows: 1
-  hideMesh: 1
+  hideMesh: 0
   Layer: 0
   textureCoordinateModes:
   - WallU: 5
@@ -38461,7 +38507,7 @@ GameObject:
   - component: {fileID: 2101523988}
   - component: {fileID: 2101523987}
   - component: {fileID: 2101523986}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: '[BuildingBlock] Cube'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39289,6 +39335,7 @@ SceneRoots:
   m_Roots:
   - {fileID: 2049376342}
   - {fileID: 2058355394}
+  - {fileID: 730421543}
   - {fileID: 599619834}
   - {fileID: 832575519}
   - {fileID: 1013887929}
