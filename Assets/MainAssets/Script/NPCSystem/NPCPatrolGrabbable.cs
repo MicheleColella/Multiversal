@@ -14,14 +14,57 @@ public class NPCPatrol : MonoBehaviour
     [SerializeField] private float groundCheckDistance = 0.1f;
     [SerializeField] private float airThreshold = 1.0f; // Altezza massima per considerare l'NPC in aria
     [SerializeField] private LayerMask groundLayer; // Per determinare il layer del terreno
-    
+    [SerializeField] private GameObject objectToToggle; // GameObject da attivare/disattivare quando tocca il terreno
+    [SerializeField] private GameObject anotherObjectToToggle; // Il nuovo oggetto da attivare/disattivare
+
+    private Coroutine patrolCoroutine; // Memorizza la coroutine
+
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         rb = GetComponent<Rigidbody>();
 
+        // Controlla che i componenti siano assegnati correttamente
+        if (agent == null)
+        {
+            Debug.LogError("NavMeshAgent non trovato!");
+        }
+
+        if (rb == null)
+        {
+            Debug.LogError("Rigidbody non trovato!");
+        }
+
         GeneratePatrolPoints();
-        StartCoroutine(PatrolCoroutine());
+
+        // Assicurati che i punti di pattuglia siano stati generati prima di iniziare la coroutine
+        if (patrolPoints != null && patrolPoints.Length > 0)
+        {
+            patrolCoroutine = StartCoroutine(PatrolCoroutine());
+        }
+        else
+        {
+            Debug.LogError("Punti di pattuglia non validi o non generati.");
+        }
+    }
+
+    // Riavvia la coroutine quando il GameObject viene riattivato
+    void OnEnable()
+    {
+        if (patrolCoroutine == null && patrolPoints != null && patrolPoints.Length > 0)
+        {
+            patrolCoroutine = StartCoroutine(PatrolCoroutine());
+        }
+    }
+
+    // Ferma la coroutine quando il GameObject viene disabilitato
+    void OnDisable()
+    {
+        if (patrolCoroutine != null)
+        {
+            StopCoroutine(patrolCoroutine);
+            patrolCoroutine = null;
+        }
     }
 
     void GeneratePatrolPoints()
@@ -35,41 +78,59 @@ public class NPCPatrol : MonoBehaviour
             {
                 patrolPoints[i] = hit.position;
             }
+            else
+            {
+                Debug.LogWarning("Punto di pattuglia non valido.");
+            }
         }
     }
 
     IEnumerator PatrolCoroutine()
+{
+    while (true)
     {
-        while (true)
+        if (IsCloseToGround())
         {
-            if (IsCloseToGround())
+            if (!agent.enabled)
             {
-                if (!agent.enabled)
-                {
-                    agent.enabled = true;
-                    rb.isKinematic = true; // Disabilita la fisica
-                    agent.SetDestination(patrolPoints[currentPatrolIndex]);
-                }
-
-                if (agent.remainingDistance < 0.1f)
-                {
-                    currentPatrolIndex = (currentPatrolIndex + 1) % patrolPoints.Length;
-                    agent.SetDestination(patrolPoints[currentPatrolIndex]);
-                }
-            }
-            else
-            {
-                // Se è "in aria", disabilita il NavMeshAgent e attiva la fisica
-                if (agent.enabled)
-                {
-                    agent.enabled = false;
-                    rb.isKinematic = false; // Abilita la fisica per farlo cadere
-                }
+                agent.enabled = true;
             }
 
-            yield return null;
+            if (!rb.isKinematic)
+            {
+                rb.isKinematic = true; // Abilita isKinematic solo quando l'NPC tocca il pavimento
+            }
+
+            if (agent.remainingDistance < 0.1f && patrolPoints.Length > 0)
+            {
+                currentPatrolIndex = (currentPatrolIndex + 1) % patrolPoints.Length;
+                agent.SetDestination(patrolPoints[currentPatrolIndex]);
+            }
         }
+        else
+        {
+            // Se è "in aria", disabilita il NavMeshAgent e attiva la fisica
+            if (agent.enabled)
+            {
+                agent.enabled = false;
+            }
+
+            if (rb.isKinematic)
+            {
+                rb.isKinematic = false; // Disabilita isKinematic quando l'NPC è in aria
+            }
+        }
+
+        // Attiva o disattiva il nuovo GameObject in base a isKinematic
+        if (anotherObjectToToggle != null)
+        {
+            anotherObjectToToggle.SetActive(rb.isKinematic);
+        }
+
+        yield return null;
     }
+}
+
 
     // Controlla se l'NPC è abbastanza vicino al suolo tramite un Raycast
     bool IsCloseToGround()

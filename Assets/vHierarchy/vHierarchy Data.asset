@@ -15,6 +15,7 @@ MonoBehaviour:
   sceneDatasByGuid:
     keys:
     - 99c9720ab356a0642a771bea13969a05
+    - 
     values:
     - goDatasByGlobalId:
         keys:
@@ -25,6 +26,7 @@ MonoBehaviour:
         - GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-2058355393-0
         - GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-1066375928-0
         - GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-2052855887-0
+        - GlobalObjectId_V1-2-99c9720ab356a0642a771bea13969a05-1495649845-0
         values:
         - iColor: 8
           icon: 
@@ -40,8 +42,10 @@ MonoBehaviour:
           icon: StandaloneInputModule Icon
         - iColor: 4
           icon: StandaloneInputModule Icon
+        - iColor: 0
+          icon: 
       goDatasByInstanceId:
-        keys: 5a01fdfff200fdffaebd01008cbd010018c8fcff28bb010058c10100
+        keys: bca90000aeb00000ccac0000aaac0000c6b0000046aa0000b6b0000072ca000064d1000082cd000060cd00007cd10000fcca00006cd10000328ef8ffb6550200c05c0200c2580200a0580200d85c020040560200c85c02009a590200329002003c9702003e9302001c93020054970200bc90020044970200169402004e7b03005a8203005c7e03003a7e030072820300d87b030062820300347f0300660e04007c150400741104005211040094150400f00e0400841504004c120400ee320400d82b0400e62e0400c42e0400f6320400622c0400
         values:
         - iColor: 8
           icon: 
@@ -57,3 +61,101 @@ MonoBehaviour:
           icon: StandaloneInputModule Icon
         - iColor: 4
           icon: StandaloneInputModule Icon
+        - iColor: 8
+          icon: 
+        - iColor: 8
+          icon: 
+        - iColor: 2
+          icon: AvatarMask On Icon
+        - iColor: 4
+          icon: StandaloneInputModule Icon
+        - iColor: 0
+          icon: LightmapParameters Icon
+        - iColor: 4
+          icon: StandaloneInputModule Icon
+        - iColor: 4
+          icon: StandaloneInputModule Icon
+        - iColor: 0
+          icon: 
+        - iColor: 8
+          icon: 
+        - iColor: 8
+          icon: 
+        - iColor: 2
+          icon: AvatarMask On Icon
+        - iColor: 4
+          icon: StandaloneInputModule Icon
+        - iColor: 0
+          icon: LightmapParameters Icon
+        - iColor: 4
+          icon: StandaloneInputModule Icon
+        - iColor: 4
+          icon: StandaloneInputModule Icon
+        - iColor: 0
+          icon: 
+        - iColor: 8
+          icon: 
+        - iColor: 8
+          icon: 
+        - iColor: 2
+          icon: AvatarMask On Icon
+        - iColor: 4
+          icon: StandaloneInputModule Icon
+        - iColor: 0
+          icon: LightmapParameters Icon
+        - iColor: 4
+          icon: StandaloneInputModule Icon
+        - iColor: 4
+          icon: StandaloneInputModule Icon
+        - iColor: 0
+          icon: 
+        - iColor: 8
+          icon: 
+        - iColor: 8
+          icon: 
+        - iColor: 2
+          icon: AvatarMask On Icon
+        - iColor: 4
+          icon: StandaloneInputModule Icon
+        - iColor: 0
+          icon: LightmapParameters Icon
+        - iColor: 4
+          icon: StandaloneInputModule Icon
+        - iColor: 4
+          icon: StandaloneInputModule Icon
+        - iColor: 0
+          icon: 
+        - iColor: 8
+          icon: 
+        - iColor: 8
+          icon: 
+        - iColor: 2
+          icon: AvatarMask On Icon
+        - iColor: 4
+          icon: StandaloneInputModule Icon
+        - iColor: 0
+          icon: LightmapParameters Icon
+        - iColor: 4
+          icon: StandaloneInputModule Icon
+        - iColor: 4
+          icon: StandaloneInputModule Icon
+        - iColor: 0
+          icon: 
+        - iColor: 8
+          icon: 
+        - iColor: 8
+          icon: 
+        - iColor: 2
+          icon: AvatarMask On Icon
+        - iColor: 4
+          icon: StandaloneInputModule Icon
+        - iColor: 4
+          icon: StandaloneInputModule Icon
+        - iColor: 4
+          icon: StandaloneInputModule Icon
+    - goDatasByGlobalId:
+        keys: []
+        values: []
+      goDatasByInstanceId:
+        keys: 
+        values: []
