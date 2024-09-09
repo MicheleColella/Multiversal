@@ -8,23 +8,25 @@ public class NPCPatrol : MonoBehaviour
     private Rigidbody rb;
     private Vector3[] patrolPoints;
     private int currentPatrolIndex = 0;
+    private Animator animator;
 
     [SerializeField] private float patrolRadius = 10f;
     [SerializeField] private int numPatrolPoints = 5;
     [SerializeField] private float groundCheckDistance = 0.1f;
-    [SerializeField] private float airThreshold = 1.0f; // Altezza massima per considerare l'NPC in aria
-    [SerializeField] private LayerMask groundLayer; // Per determinare il layer del terreno
-    [SerializeField] private GameObject objectToToggle; // GameObject da attivare/disattivare quando tocca il terreno
-    [SerializeField] private GameObject anotherObjectToToggle; // Il nuovo oggetto da attivare/disattivare
+    [SerializeField] private float airThreshold = 1.0f;
+    [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private float rotationSpeed = 720f; // Velocità di rotazione in gradi al secondo
 
-    private Coroutine patrolCoroutine; // Memorizza la coroutine
+    private Coroutine patrolCoroutine;
+
+    private static readonly int IsGrounded = Animator.StringToHash("IsGrounded");
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         rb = GetComponent<Rigidbody>();
+        animator = GetComponent<Animator>();
 
-        // Controlla che i componenti siano assegnati correttamente
         if (agent == null)
         {
             Debug.LogError("NavMeshAgent non trovato!");
@@ -35,9 +37,13 @@ public class NPCPatrol : MonoBehaviour
             Debug.LogError("Rigidbody non trovato!");
         }
 
+        if (animator == null)
+        {
+            Debug.LogError("Animator non trovato!");
+        }
+
         GeneratePatrolPoints();
 
-        // Assicurati che i punti di pattuglia siano stati generati prima di iniziare la coroutine
         if (patrolPoints != null && patrolPoints.Length > 0)
         {
             patrolCoroutine = StartCoroutine(PatrolCoroutine());
@@ -48,7 +54,6 @@ public class NPCPatrol : MonoBehaviour
         }
     }
 
-    // Riavvia la coroutine quando il GameObject viene riattivato
     void OnEnable()
     {
         if (patrolCoroutine == null && patrolPoints != null && patrolPoints.Length > 0)
@@ -57,7 +62,6 @@ public class NPCPatrol : MonoBehaviour
         }
     }
 
-    // Ferma la coroutine quando il GameObject viene disabilitato
     void OnDisable()
     {
         if (patrolCoroutine != null)
@@ -86,71 +90,63 @@ public class NPCPatrol : MonoBehaviour
     }
 
     IEnumerator PatrolCoroutine()
-{
-    while (true)
     {
-        if (IsCloseToGround())
+        while (true)
         {
-            if (!agent.enabled)
+            bool isGrounded = IsCloseToGround();
+            animator.SetBool(IsGrounded, isGrounded);
+
+            if (isGrounded)
             {
-                agent.enabled = true;
+                if (!agent.enabled)
+                {
+                    agent.enabled = true;
+                }
+
+                if (!rb.isKinematic)
+                {
+                    rb.isKinematic = true;
+                }
+
+                if (agent.remainingDistance < 0.1f && patrolPoints.Length > 0)
+                {
+                    currentPatrolIndex = (currentPatrolIndex + 1) % patrolPoints.Length;
+                    agent.SetDestination(patrolPoints[currentPatrolIndex]);
+                }
+
+                // Rotazione più veloce
+                Vector3 targetDirection = (agent.steeringTarget - transform.position).normalized;
+                if (targetDirection != Vector3.zero)
+                {
+                    Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
+                    transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+                }
+            }
+            else
+            {
+                if (agent.enabled)
+                {
+                    agent.enabled = false;
+                }
+
+                if (rb.isKinematic)
+                {
+                    rb.isKinematic = false;
+                }
             }
 
-            if (!rb.isKinematic)
-            {
-                rb.isKinematic = true; // Abilita isKinematic solo quando l'NPC tocca il pavimento
-            }
-
-            if (agent.remainingDistance < 0.1f && patrolPoints.Length > 0)
-            {
-                currentPatrolIndex = (currentPatrolIndex + 1) % patrolPoints.Length;
-                agent.SetDestination(patrolPoints[currentPatrolIndex]);
-            }
+            yield return null;
         }
-        else
-        {
-            // Se è "in aria", disabilita il NavMeshAgent e attiva la fisica
-            if (agent.enabled)
-            {
-                agent.enabled = false;
-            }
-
-            if (rb.isKinematic)
-            {
-                rb.isKinematic = false; // Disabilita isKinematic quando l'NPC è in aria
-            }
-        }
-
-        // Attiva o disattiva il nuovo GameObject in base a isKinematic
-        if (anotherObjectToToggle != null)
-        {
-            anotherObjectToToggle.SetActive(rb.isKinematic);
-        }
-
-        yield return null;
     }
-}
 
-
-    // Controlla se l'NPC è abbastanza vicino al suolo tramite un Raycast
     bool IsCloseToGround()
     {
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, Vector3.down, out hit, airThreshold, groundLayer))
-        {
-            return true; // Se il Raycast colpisce qualcosa sotto una certa distanza, consideriamo l'NPC "a terra"
-        }
-        else
-        {
-            return false; // Altrimenti è "in aria"
-        }
+        return Physics.Raycast(transform.position, Vector3.down, airThreshold, groundLayer);
     }
 
-    // Disegna il gizmo per visualizzare l'airThreshold
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        // Disegna una linea che rappresenta l'airThreshold
         Gizmos.DrawLine(transform.position, transform.position + Vector3.down * airThreshold);
     }
 }
