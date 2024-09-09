@@ -6,18 +6,13 @@ using Unity.AI.Navigation;
 public class NavMeshGenerator : MonoBehaviour
 {
     [SerializeField] private float generationDelay = 5f;
-    [SerializeField] private float updateInterval = 2f; // intervallo tra gli aggiornamenti
+    [SerializeField] private float updateInterval = 0.5f; // intervallo di aggiornamento costante
     public NavMeshSurface surface;
-
-    private Vector3 lastPosition;
-    private Quaternion lastRotation;
 
     void Start()
     {
-        lastPosition = transform.position;
-        lastRotation = transform.rotation;
         StartCoroutine(GenerateNavMeshDelayed());
-        StartCoroutine(UpdateNavMeshPeriodically());
+        StartCoroutine(UpdateNavMeshContinuously());
     }
 
     IEnumerator GenerateNavMeshDelayed()
@@ -26,14 +21,19 @@ public class NavMeshGenerator : MonoBehaviour
         BuildNavMesh();
     }
 
-    IEnumerator UpdateNavMeshPeriodically()
+    IEnumerator UpdateNavMeshContinuously()
     {
         while (true)
         {
             yield return new WaitForSeconds(updateInterval);
-            if (HasTransformChanged())
+            if (surface != null)
             {
-                BuildNavMesh();
+                surface.UpdateNavMesh(surface.navMeshData);
+                Debug.Log("NavMesh aggiornato.");
+            }
+            else
+            {
+                Debug.LogError("NavMeshSurface non trovato.");
             }
         }
     }
@@ -43,22 +43,11 @@ public class NavMeshGenerator : MonoBehaviour
         if (surface != null)
         {
             surface.BuildNavMesh();
-            Debug.Log("NavMesh aggiornato.");
+            Debug.Log("NavMesh generato con successo.");
         }
         else
         {
             Debug.LogError("NavMeshSurface non trovato.");
         }
-    }
-
-    private bool HasTransformChanged()
-    {
-        if (transform.position != lastPosition || transform.rotation != lastRotation)
-        {
-            lastPosition = transform.position;
-            lastRotation = transform.rotation;
-            return true;
-        }
-        return false;
     }
 }
